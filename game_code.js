@@ -37,11 +37,11 @@ const config = {
   
 
 function preload() { 
-        this.load.image('ball', 'assets/images/ball_32_32.png');
-        this.load.image('paddle', 'assets/images/paddle_128_32.png');
-        this.load.image('brick1', 'assets/images/brick1_64_32.png');
-        this.load.image('brick2', 'assets/images/brick2_64_32.png');
-        this.load.image('brick3', 'assets/images/brick3_64_32.png');
+        this.load.image('ball', 'assets/images/ball.png');
+        this.load.image('paddle', 'assets/images/paddle.png');
+        this.load.image('brick1', 'assets/images/brick1.png');
+        this.load.image('brick2', 'assets/images/brick2.png');
+        this.load.image('brick3', 'assets/images/brick3.png');
         this.load.image('powerUP', 'assets/images/powerUp.png');
         this.load.image('powerOut', 'assets/images/powerOut.png');
 }
@@ -151,7 +151,7 @@ yellowBricks = this.physics.add.group({
   openingText = this.add.text(
     this.physics.world.bounds.width / 2,
     this.physics.world.bounds.height / 2,
-    'Press SPACE To Start The Game',
+    'PRESS "SPACE" TO START THE GAME',
     {
       fontFamily: 'Arial, Courier, monospace',
       fontSize: '30px',
@@ -164,9 +164,9 @@ yellowBricks = this.physics.add.group({
   gameOverText = this.add.text(
     this.physics.world.bounds.width / 2,
     this.physics.world.bounds.height / 2,
-    'Game End',
+    'GAME END',
     {
-      fontFamily: 'Monaco, Courier, monospace',
+      fontFamily: 'Arial, Courier, monospace',
       fontSize: '50px',
       fill: '#fff'
     }
@@ -180,7 +180,7 @@ yellowBricks = this.physics.add.group({
     this.physics.world.bounds.height / 2,
     'YOU HAVE WON THE GAME',
     {
-      fontFamily: 'Monaco, Courier, monospace',
+      fontFamily: 'Arial, Courier, monospace',
       fontSize: '30px',
       fill: '#fff'
     }
@@ -192,9 +192,9 @@ yellowBricks = this.physics.add.group({
   playerLifeText = this.add.text(
     0 ,
     0,
-    'Life lefts:' + playerLife ,
+    'LIFES LEFT:  ' + playerLife ,
     {
-      fontFamily: 'Monaco, Courier, monospace',
+      fontFamily: 'Arial, Courier, monospace',
       fontSize: '30px',
       fill: '#fff'
     }
@@ -213,7 +213,7 @@ function update() {
     ball.disableBody(true, true);
   } else if (isWon()) {
     playerWonText.setVisible(true);
-  ball.disableBody(true, true);
+    ball.disableBody(true, true);
   } else {
     // Put this in so that the player stays still if no key is being pressed
     player.body.setVelocityX(0);
@@ -230,18 +230,13 @@ function update() {
         openingText.setVisible(false);
       }
     }
-  if (gameStarted) {
-    // if (ball.body.velocity.y === 0) {
-    //     ball.setVelocityY(200);
-    // }
-  }
   }
 }
 
 function isGameOver(world) {
     if (ball.body.y > world.bounds.height) {
       playerLife--;
-      playerLifeText.setText('Life lefts:' + playerLife);
+      playerLifeText.setText('LIFES LEFT:  ' + playerLife);
       gameStarted = false;
       ball.body.y = 550;
       ball.body.setVelocityX(0);
@@ -261,27 +256,15 @@ function hitBrick(ball, brick) {
     if (ball.body.velocity.x === 0) {
     randNum = Math.random();
     if (randNum >= 0.5) {
-    ball.body.setVelocityX(150);
+    ball.body.setVelocityX(yVeloc);
     } else {
-    ball.body.setVelocityX(-150);
+    ball.body.setVelocityX(-yVeloc);
     }
     ball.body.setVelocityY(-yVeloc);
     }
 }
 function hitPlayer(ball, player) {
-    // Increase the velocity of the ball after it bounces
-    if (gameStarted) {
-    // ball.setVelocityY(ball.body.velocity.y - 5);
-    
-  
-    // let newXVelocity = Math.abs(ball.body.velocity.x) + 5;
-    // // If the ball is to the left of the player, ensure the X-velocity is negative
-    // if (ball.x < player.x) {
-    //   ball.setVelocityX(-newXVelocity);
-    // } else {
-    //   ball.setVelocityX(newXVelocity);
-    // }
-  }
+    // no action
   }
   function hitPower(ball, power) {
 
@@ -305,9 +288,9 @@ function hitPowerUp(player, powerUP) {
   player.setImmovable(true);
   player.body.setVelocityX(0);
   if (cursors.left.isDown) {
-  player.body.setVelocityX(-350);
+  player.body.setVelocityX(-400);
   } else if (cursors.right.isDown) {
-  player.body.setVelocityX(350);
+  player.body.setVelocityX(400);
   }
 }
 function hitPowerOut(player, powerOuts) {
